@@ -1,0 +1,1 @@
+{"name":"Local: add_two_no_without_operator","url":"e:\\vs code\\add_two_no_without_operator.cpp","tests":[{"id":1667925846525,"input":"1\n3 3","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\vs code\\add_two_no_without_operator.cpp","group":"local","local":true}
