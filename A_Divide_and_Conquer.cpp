@@ -41,25 +41,38 @@ ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    string s; cin>>s;
-    ll ans=0;
-    for(int i=0;i<s.size();i++)
+    vector<ll>vec(n); cin>>vec;
+    ll odds=0;
+    for(int i=0;i<n;i++)
     {
-         vector<int> cnt(10);
-        int distinct = 0, maxo = 0;
-        for(int j=i;j<n;j++)
-        {
-            if (j - i >= 101)
-                break;
-            int c = s[j] - '0';
-            if (cnt[c] == 0)
-                distinct++;
-            maxo=max(maxo, ++cnt[c]);
-            if (maxo <= distinct)
-                ans++;
-        }
+        if(vec[i]%2==1) odds++;
     }
-    cout<<ans<<endl;
+    if(odds%2==0){
+        cout<<"0"<<endl;
+    }
+    else{
+        // sort(vec.begin(),vec.end());
+        ll ans=INT_MAX;
+        for(int i=0;i<n;i++)
+        {
+            if(vec[i]%2==1){
+                ll temp=0 , tt=vec[i];
+                while(tt%2!=0){
+                    tt/=2; 
+                    temp++;
+                }
+                ans=min(ans,temp);
+            }
+            else{
+                ll temp=0, tt=vec[i];
+                while(tt%2!=1){
+                    tt/=2; temp++;
+                }
+                ans=min(ans,temp);
+            }
+        }
+        cout<<ans<<endl;
+    }
 }
 return 0;
 }

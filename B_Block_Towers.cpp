@@ -41,23 +41,12 @@ ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    string s; cin>>s;
-    ll ans=0;
-    for(int i=0;i<s.size();i++)
+    vector<ll>vec(n); cin>>vec;
+    sort(vec.begin()+1,vec.end());
+    ll ans=vec[0];
+    for(int i=1;i<n;i++)
     {
-         vector<int> cnt(10);
-        int distinct = 0, maxo = 0;
-        for(int j=i;j<n;j++)
-        {
-            if (j - i >= 101)
-                break;
-            int c = s[j] - '0';
-            if (cnt[c] == 0)
-                distinct++;
-            maxo=max(maxo, ++cnt[c]);
-            if (maxo <= distinct)
-                ans++;
-        }
+        if(vec[i]>ans) ans += ceil((vec[i]-ans)/2.0);
     }
     cout<<ans<<endl;
 }

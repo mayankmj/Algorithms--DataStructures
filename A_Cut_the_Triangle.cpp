@@ -40,26 +40,22 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
-    string s; cin>>s;
-    ll ans=0;
-    for(int i=0;i<s.size();i++)
+    vector<pair<ll,ll>>vec;
+    for(int i=0;i<3;i++)
     {
-         vector<int> cnt(10);
-        int distinct = 0, maxo = 0;
-        for(int j=i;j<n;j++)
-        {
-            if (j - i >= 101)
-                break;
-            int c = s[j] - '0';
-            if (cnt[c] == 0)
-                distinct++;
-            maxo=max(maxo, ++cnt[c]);
-            if (maxo <= distinct)
-                ans++;
-        }
+        ll x,y; cin>>x>>y;
+        vec.pb(make_pair(x,y));
     }
-    cout<<ans<<endl;
+    sort(vec.begin(),vec.end());
+    ll temp=0;
+    for(int i=0;i<2;i++)
+    {
+        if(vec[i].first==vec[i+1].first) temp++;
+    }
+    ll tt=0;
+    if(vec[0].second==vec[1].second || vec[1].second==vec[2].second || vec[0].second==vec[2].second) tt++;
+    if(tt>0 && temp>0) cout<<"NO"<<endl;
+    else cout<<"YES"<<endl;
 }
 return 0;
 }

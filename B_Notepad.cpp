@@ -40,26 +40,21 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
-    string s; cin>>s;
-    ll ans=0;
-    for(int i=0;i<s.size();i++)
+    ll n; cin>>n; string s; cin>>s; bool flag=0;
+    if(s.size()<=2) cout<<"NO"<<endl;
+    else{
+       for(int i=0;i<s.size()-2;i++)
     {
-         vector<int> cnt(10);
-        int distinct = 0, maxo = 0;
-        for(int j=i;j<n;j++)
+        for(int j=i+2;j<s.size()-1;j++)
         {
-            if (j - i >= 101)
-                break;
-            int c = s[j] - '0';
-            if (cnt[c] == 0)
-                distinct++;
-            maxo=max(maxo, ++cnt[c]);
-            if (maxo <= distinct)
-                ans++;
+            if(s[i]==s[j] && s[i+1] == s[j+1]) {
+                flag=1; break;
+            }
         }
     }
-    cout<<ans<<endl;
+    if(!flag) cout<<"NO"<<endl;
+    else cout<<"YES"<<endl;
+    }
 }
 return 0;
 }

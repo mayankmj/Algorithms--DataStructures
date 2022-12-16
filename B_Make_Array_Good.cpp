@@ -41,25 +41,28 @@ ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    string s; cin>>s;
-    ll ans=0;
-    for(int i=0;i<s.size();i++)
+    vector<pair<ll,ll>>vec;
+    for(int i=0;i<n;i++){
+        ll tt; cin>>tt; vec.pb(make_pair(tt,i+1));
+    }
+    ll mn=INT_MAX;
+    for(int i=0;i<n;i++) mn=min(mn,vec[i].first);
+    vector<pair<ll,ll>>ans;
+    sort(vec.begin(),vec.end());
+    ans.pb(make_pair(1,0));
+    for(int i=1;i<n;i++)
     {
-         vector<int> cnt(10);
-        int distinct = 0, maxo = 0;
-        for(int j=i;j<n;j++)
-        {
-            if (j - i >= 101)
-                break;
-            int c = s[j] - '0';
-            if (cnt[c] == 0)
-                distinct++;
-            maxo=max(maxo, ++cnt[c]);
-            if (maxo <= distinct)
-                ans++;
+        if(vec[i].first%mn==0) {ans.pb(make_pair(i+1,0)); mn=vec[i].first;}
+        else{
+            ll tt=(mn-vec[i].first%mn);
+            //  cout<<i<<" "<<t<<endl;
+            ans.pb(make_pair(vec[i].second,tt));
+            mn=vec[i].first+tt;
         }
     }
-    cout<<ans<<endl;
+    cout<<n<<endl;
+    sort(ans.begin(),ans.end());
+    for(auto &x:ans) cout<<x.first<<" "<<x.second<<endl;
 }
 return 0;
 }

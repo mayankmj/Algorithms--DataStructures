@@ -41,25 +41,21 @@ ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    string s; cin>>s;
-    ll ans=0;
-    for(int i=0;i<s.size();i++)
-    {
-         vector<int> cnt(10);
-        int distinct = 0, maxo = 0;
-        for(int j=i;j<n;j++)
-        {
-            if (j - i >= 101)
-                break;
-            int c = s[j] - '0';
-            if (cnt[c] == 0)
-                distinct++;
-            maxo=max(maxo, ++cnt[c]);
-            if (maxo <= distinct)
-                ans++;
+    vector<ll>vec; ll ans=0;
+    if(n<=10) cout<<n<<endl;
+    else {
+        ll digit = log10(n);
+        ll extra = n,first_no;
+        while(extra>0){
+            first_no=extra%10; extra/=10;
         }
+        ll sum=first_no;
+        while(n>=10){
+            sum+=9; n/=10;
+        }
+        cout<<sum<<endl;
+
     }
-    cout<<ans<<endl;
 }
 return 0;
 }

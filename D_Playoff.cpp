@@ -38,28 +38,74 @@ bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  re
 int32_t main(){
 fast
 ll t=1;
-cin>>t;
+// cin>>t;
 while(t--){
     ll n; cin>>n;
     string s; cin>>s;
-    ll ans=0;
+    vector<ll>vec;
+    ll one=0,zero=0;
+    for(auto &x:s)
+    {
+        if(x=='1') one++;
+        else zero++;
+    }
+    // cout<<one<<" "<<zero<<endl;
+    if(one == s.size()){
+        cout<<binpow(2,n)<<endl;
+        continue;
+    }
+    else if(zero == s.size())
+    {
+        cout<<1<<endl;
+        continue;
+    }
+    else{
+    for(int i=1;i<=binpow(2,n);i++) {
+        vec.pb(i);
+    }
+   ll start=0,end=binpow(2,n)-1,one_c=0,zero_c=0,x=0,y=0;
     for(int i=0;i<s.size();i++)
     {
-         vector<int> cnt(10);
-        int distinct = 0, maxo = 0;
-        for(int j=i;j<n;j++)
-        {
-            if (j - i >= 101)
-                break;
-            int c = s[j] - '0';
-            if (cnt[c] == 0)
-                distinct++;
-            maxo=max(maxo, ++cnt[c]);
-            if (maxo <= distinct)
-                ans++;
+        if(s[i]=='1') {
+            zero_c++;
+            if(zero_c<1) {
+                vec[start]=-1; start++;
+            }
+            else {
+                 
+                for(int k=0;k<binpow(2,zero_c-1);k++) {
+                vec[start]=-1;
+                start++;
+                }
+               
+            }
         }
+        else { 
+            one_c++;
+            
+            if(one_c<1) {
+                vec[end]=-1;
+                end--;
+            }
+            else{
+               
+                for(int k=0;k<binpow(2,one_c-1);k++) {
+                    vec[end]=-1;
+                    end--;
+                }
+                
+            }
+            }
     }
-    cout<<ans<<endl;
+    for(int i=0;i<binpow(2,n);i++)
+    {
+        if(vec[i]!=-1) cout<<vec[i]<<" ";
+    }
+    cout<<endl;
+    }
+
+    // for(aut)
+    // cout<<endl;
 }
 return 0;
 }

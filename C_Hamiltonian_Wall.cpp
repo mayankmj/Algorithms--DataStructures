@@ -41,25 +41,50 @@ ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    string s; cin>>s;
-    ll ans=0;
-    for(int i=0;i<s.size();i++)
-    {
-         vector<int> cnt(10);
-        int distinct = 0, maxo = 0;
-        for(int j=i;j<n;j++)
-        {
-            if (j - i >= 101)
-                break;
-            int c = s[j] - '0';
-            if (cnt[c] == 0)
-                distinct++;
-            maxo=max(maxo, ++cnt[c]);
-            if (maxo <= distinct)
-                ans++;
-        }
+    char arr[2][n];
+    for(int i=0;i<2;i++){
+        for(int j=0;j<n;j++) cin>>arr[i][j];
     }
-    cout<<ans<<endl;
+    ll start=0; bool flag=1;
+    ll ss=0;
+    if(arr[0][0]=='B' && arr[1][0]=='B'){
+        if(arr[0][1]=='B') {start=0; arr[0][1]='W';}
+        else if(arr[1][1]=='B') {start=1; arr[1][1]='W';}
+        else flag=true;
+        ss=1;
+    }
+    else if(arr[0][0]=='B') {start=0; arr[0][0]='W';}
+    else if(arr[1][0]=='B') {start=1; arr[1][0]='W';}
+    else flag=0;
+    ll i=1;
+    while(i<n)
+    {
+        if(ss==1){
+            ss=0; i++;continue;
+        }
+        if(start==0){
+            // arr[start][i]='W';
+            if(arr[start+1][i]=='B') {arr[start+1][i]='W';start=1;}
+            else if(arr[start][i+1]=='B') arr[start][i+1]='W';
+            else flag=0;
+        }
+        else{
+            // arr[start][i]='W';
+            if(arr[start-1][i]=='B') {arr[start-1][i]='W';start=0;}
+            else if(arr[start][i+1]=='B') arr[start][i+1]='W';
+            else flag=0;
+        }
+        i++;
+    }
+    for(int i=0;i<2;i++){
+        for(int j=1;j<n-1;j++) {
+            cout<<arr[i][j]<<" ";
+            if(arr[i][j]=='B') flag=0;
+        }
+        cout<<endl;
+    }
+    if(!flag) cout<<"NO"<<endl;
+    else cout<<"YES"<<endl;
 }
 return 0;
 }
