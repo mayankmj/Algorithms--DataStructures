@@ -32,7 +32,11 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-
+bool sortbysec(const pair<int,int> &a,
+              const pair<int,int> &b)
+{
+    return (a.second > b.second);
+}
 
 
 int32_t main(){
@@ -40,34 +44,50 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
-    string s; cin>>s;
+    ll n,k; cin>>n>>k;
     vector<pair<ll,ll>>vec;
-    for(int i=0;i<n;i++) vec.pb(make_pair(s[i]-'0',0));
-
-    ll count =0, start=0,assign=1;
+    vector<ll>a(n),b(n); cin>>a>>b;
+    multiset<ll>ans;
     for(int i=0;i<n;i++)
     {
-        if(!vec[i].second) continue;
-        if(s[i]!=s[i+1]){
-            vec[i].second=assign;
-            vec[i+1].second=assign;
-        }
-        else{
-            assign++;
-            for(int j=i+1;j<n;j++)
-            {
-                if(s[i]!=s[j]){
-                   vec[i].second=assign;
-                   vec[j].second=assign;
-                }
-            }
-            assign++;
-        }
+        vec.pb(make_pair(a[i],b[i]));
     }
-    cout<<assign<<endl;
-    for(auto&x:vec) cout<<x.second<<" ";
-    cout<<endl;
+    for(int i=0;i<n;i++) ans.insert(b[i]);
+    ll temp=0,start=0,flag=0;
+    sort(vec.begin(),vec.end());
+    while(start<n)
+    {
+        //   temp+=k;
+        // for(int i=start;i<n;i++)
+        // {
+        //     if(attack[i].first>temp){
+        //         k=k-attack[i].second;
+        //         start=i;
+        //         break;
+        //     }
+        //     if(i == n-1){
+        //         flag=1; break;
+        //     }
+        // }
+        // if(flag==1) break;
+
+        temp+=k;
+        while(start < n && vec[start].first<=temp)
+        {
+            ans.erase(ans.find(vec[start].second));
+            start++;
+        }
+
+        if(ans.size()==0) flag=1;
+        if(ans.empty()) break;
+
+        k-=*ans.begin();
+        if(ans.size()==0) flag=1;
+        if(k<=0) break;
+    }
+    if(ans.empty()) cout<<"YES"<<endl;
+    else cout<<"NO"<<endl;
+
 }
 return 0;
 }

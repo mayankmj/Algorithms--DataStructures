@@ -41,32 +41,27 @@ ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    string s; cin>>s;
-    vector<pair<ll,ll>>vec;
-    for(int i=0;i<n;i++) vec.pb(make_pair(s[i]-'0',0));
-
-    ll count =0, start=0,assign=1;
-    for(int i=0;i<n;i++)
+    vector<ll>hash(n+1);
+    ll count=(n*(n-1)/2)/n;
+    for(int i=1;i<=n;i++)
     {
-        if(!vec[i].second) continue;
-        if(s[i]!=s[i+1]){
-            vec[i].second=assign;
-            vec[i+1].second=assign;
-        }
-        else{
-            assign++;
-            for(int j=i+1;j<n;j++)
-            {
-                if(s[i]!=s[j]){
-                   vec[i].second=assign;
-                   vec[j].second=assign;
-                }
+        hash[i]=count;
+    }
+    cout<<endl;
+     for(int i=1;i<n;i++)
+    {
+        for(int j=i+1;j<=n;j++)
+        {
+            if(hash[i]>0){
+                cout<<"1 "; hash[i]--;
             }
-            assign++;
+            else if(hash[j]>0){
+                cout<<"-1 "; hash[j]--;
+            }
+            else cout<<"0 ";
         }
     }
-    cout<<assign<<endl;
-    for(auto&x:vec) cout<<x.second<<" ";
+    cout<<endl;
     cout<<endl;
 }
 return 0;

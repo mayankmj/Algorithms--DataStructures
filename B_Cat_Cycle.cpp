@@ -40,34 +40,20 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
-    string s; cin>>s;
-    vector<pair<ll,ll>>vec;
-    for(int i=0;i<n;i++) vec.pb(make_pair(s[i]-'0',0));
-
-    ll count =0, start=0,assign=1;
-    for(int i=0;i<n;i++)
-    {
-        if(!vec[i].second) continue;
-        if(s[i]!=s[i+1]){
-            vec[i].second=assign;
-            vec[i+1].second=assign;
-        }
-        else{
-            assign++;
-            for(int j=i+1;j<n;j++)
-            {
-                if(s[i]!=s[j]){
-                   vec[i].second=assign;
-                   vec[j].second=assign;
-                }
-            }
-            assign++;
-        }
+    ll n,k; cin>>n>>k;
+    ll a=n,b=1;
+    if(k==1) cout<<"1"<<endl;
+    else if(n%2==0) cout<<((k%n) ? k%n : n)<<endl;
+    else if(n==3){
+        k=k*2-1;
+       cout<<((k%n) ? k%n : n)<<endl;
     }
-    cout<<assign<<endl;
-    for(auto&x:vec) cout<<x.second<<" ";
-    cout<<endl;
+    else{
+       k--;
+       ll count=k/(n/2);
+       k+=count;
+       cout<<k%n+1<<endl;
+    }
 }
 return 0;
 }

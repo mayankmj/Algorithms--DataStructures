@@ -32,7 +32,18 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-
+string DecimalToBinary(int num)
+{
+    string str;
+      while(num){
+      if(num & 1) // 1
+        str+='1';
+      else // 0
+        str+='0';
+      num>>=1; // Right Shift by 1 
+    }   
+      return str;
+}
 
 
 int32_t main(){
@@ -40,34 +51,17 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
-    string s; cin>>s;
-    vector<pair<ll,ll>>vec;
-    for(int i=0;i<n;i++) vec.pb(make_pair(s[i]-'0',0));
-
-    ll count =0, start=0,assign=1;
-    for(int i=0;i<n;i++)
+    ll n;cin>>n;
+    vector<ll>vec(n); cin>>vec;
+    vector<ll>one(34,-1);
+    vector<ll>zero(34,-1);
+    ll mx=vec[0],mn=vec[0];
+    for(int i=1;i<n;i++)
     {
-        if(!vec[i].second) continue;
-        if(s[i]!=s[i+1]){
-            vec[i].second=assign;
-            vec[i+1].second=assign;
-        }
-        else{
-            assign++;
-            for(int j=i+1;j<n;j++)
-            {
-                if(s[i]!=s[j]){
-                   vec[i].second=assign;
-                   vec[j].second=assign;
-                }
-            }
-            assign++;
-        }
+        mx=mx | vec[i];
+        mn=mn & vec[i];
     }
-    cout<<assign<<endl;
-    for(auto&x:vec) cout<<x.second<<" ";
-    cout<<endl;
+    cout<<abs(mx-mn)<<endl;
 }
 return 0;
 }
