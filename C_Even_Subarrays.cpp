@@ -33,35 +33,27 @@ bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  re
 
 
 
-ll fsqrt(ll x)
-{
-    if (x == 0 || x == 1)
-        return x;
-    ll start = 1, end = x / 2, ans;
-    while (start <= end) {
-        ll mid = (start + end) / 2;
-        ll sqr = mid * mid;
-        if (sqr == x)
-            return mid;
- 
-        if (sqr <= x) {
-            start = mid + 1;
-            ans = mid;
-        }
-        else 
-            end = mid - 1;
-    }
-    return ans;
-}
+
 
 int32_t main(){
 fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n; n=2*n;
-    ll ans=(fsqrt(n))-1;//cout<<ans<<" ";
-    cout<<ans/2<<endl;
+    ll n; cin>>n;
+    vector<ll>vec(n); cin>>vec;
+    ll mx=INT_MAX;  
+    for(int i=0;i<n;i++)
+    {
+        mx=max(mx,vec[i]);
+    }
+    ll tt=sqrtl(mx)+1;
+    vector<ll>sq;
+    for(int i=1;i<=tt;i++)
+    {
+        sq.push_back(binpow())
+    }
+
 }
 return 0;
 }

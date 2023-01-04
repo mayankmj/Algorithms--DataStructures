@@ -32,26 +32,37 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-
-ll fsqrt(ll x)
+ll lcs(string X, string Y, ll m, ll n,
+        vector<vector<ll> >& dp)
 {
-    if (x == 0 || x == 1)
-        return x;
-    ll start = 1, end = x / 2, ans;
-    while (start <= end) {
-        ll mid = (start + end) / 2;
-        ll sqr = mid * mid;
-        if (sqr == x)
-            return mid;
- 
-        if (sqr <= x) {
-            start = mid + 1;
-            ans = mid;
-        }
-        else 
-            end = mid - 1;
+    if (m == 0 || n == 0)
+        return 0;
+    if (X[m - 1] == Y[n - 1])
+        return dp[m][n] = 1 + lcs(X, Y, m - 1, n - 1, dp);
+  
+    if (dp[m][n] != -1) {
+        return dp[m][n];
     }
-    return ans;
+    return dp[m][n] = max(lcs(X, Y, m, n - 1, dp),
+                          lcs(X, Y, m - 1, n, dp));
+}
+ll ans_finder(string s){
+      string rs = s;
+        reverse(rs.begin(), rs.end());
+        
+        vector<int> row1(s.size()+1), row2(s.size()+1);
+        for (int i=1; i<=s.size(); i++) {
+            for (int j=1; j<=rs.size(); j++) {
+                if (rs[j-1] == s[i-1]) {
+                    row2[j] = row1[j-1] + 1;
+                }
+                else {
+                    row2[j] = max(row1[j], row2[j-1]);
+                }
+            }
+            row1 = row2;
+        }
+        return row1.back();
 }
 
 int32_t main(){
@@ -59,9 +70,18 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n; n=2*n;
-    ll ans=(fsqrt(n))-1;//cout<<ans<<" ";
-    cout<<ans/2<<endl;
+    ll n ; cin>>n;
+    string s; cin>>s;
+    map<char,int>mpp;
+    for(int i=0;i<s.size();i++)
+    {
+        mpp[s[i]]++;
+    }
+    if(mpp.size()==1){
+        cout<<n/2<<endl;
+        continue;
+    }
+    cout<<ans_finder(s)/2<<endl;
 }
 return 0;
 }
