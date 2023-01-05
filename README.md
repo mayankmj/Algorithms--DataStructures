@@ -1,11 +1,11 @@
-Here is the correct solutions of my submission on various
-platforms like codeforces , codechef , atcoder , google kickstart
+Here is the correct solutions of my submission on
+# platforms like codeforces , codechef , atcoder , google kickstart
 
-#codeforces 
+# codeforces 
 mayank_mj
 
-#codechef 
+# codechef 
 mayank_mj
 
-#atcoder  
+# atcoder  
 mayank_mj
