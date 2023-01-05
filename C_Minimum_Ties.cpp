@@ -41,27 +41,43 @@ ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    vector<ll>hash(n+1);
-    ll count=(n*(n-1)/2)/n;
+    if(n==2){
+        cout<<"0"<<endl; continue;
+    }
+    else if(n==3){
+        cout<<"1 -1 1"<<endl;
+        continue;
+    }
+    vector<pair<ll,ll>>hash(n+1);
+    ll count=((n*(n-1))/2)/n;
+    ll s=0;
+    if(n%2==0) s=1;
+    //  cout<<count<<endl;
     for(int i=1;i<=n;i++)
     {
-        hash[i]=count;
+        hash[i].first = 3*count;
+        hash[i].second = s;
     }
-    cout<<endl;
+    // cout<<hash[1]<<"  ";
      for(int i=1;i<n;i++)
     {
         for(int j=i+1;j<=n;j++)
         {
-            if(hash[i]>0){
-                cout<<"1 "; hash[i]--;
+            if(hash[i].first > 0){
+                cout<<"1 "; hash[i].first-=3;
             }
-            else if(hash[j]>0){
-                cout<<"-1 "; hash[j]--;
+            else if(hash[i].second > 0){
+                cout<<"0 "; hash[i].second--;
             }
-            else cout<<"0 ";
+            else if(hash[j].first > 0){
+                cout<<"-1 "; hash[j].first-=3;
+            }
+            else if(hash[j].second > 0){
+                cout<<"0 "; hash[j].second--;
+            }
         }
     }
-    cout<<endl;
+    // cout<<hash[1]<<" ";
     cout<<endl;
 }
 return 0;
