@@ -51,7 +51,7 @@ while(t--){
             if(arr[i][j]) one++;
         }
     }
-    if(one%n && one>=n) cout<<"-1"<<endl;
+    if(one%n || one<n) cout<<"-1"<<endl;
     else{
         ll temp=one/n,ans=0;
         map<ll,vector<ll>>tt;
@@ -63,8 +63,6 @@ while(t--){
                 if(arr[i][j]) tt[i+1].pb(j+1);
             }
         }
-        
-
     }
 }
 return 0;

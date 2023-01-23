@@ -42,16 +42,18 @@ cin>>t;
 while(t--){
     ll n,m,k; cin>>n>>m>>k;
     vector<ll>vec(m); cin>>vec;
-    ll flag=0;
-    ll temp = (n/k) + ((n%k==0) ? 0 : 1);
-    // cout<<temp<<endl;
+    sort(vec.begin(),vec.end());
+    ll temp = (n/k) + ((n%k==0) ? 0 : 1) ,flag=0,sum=0,count=0;
     for(int i=0;i<m;i++)
     {
         if(vec[i]>temp){
             flag=1;
         }
+        else if(vec[i]>=temp && n%k>0) count++;
+        sum+=vec[i];
     }
-    if(flag==1 || k>m) cout<<"NO"<<endl;
+    // cout<<n%k<<endl;
+    if(flag==1 || sum%k!=n%k || count>n%k) cout<<"NO"<<endl;
     else cout<<"YES"<<endl;
 }
 return 0;

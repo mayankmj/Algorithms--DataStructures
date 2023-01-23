@@ -32,7 +32,16 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-
+ll checker(string s,ll index)
+{
+    ll tt=s[index];
+    for(int i=index;i>=0;i--)
+    {
+        if(tt!=s[i]){
+            return index-i;
+        }
+    }
+}
 
 
 int32_t main(){
@@ -42,34 +51,25 @@ cin>>t;
 while(t--){
     ll n; cin>>n;
     string s; cin>>s;
-    vector<ll>one(n,0);
-    // if(s[0]=='0') one[0]=1;
-    
+    ll f_one=-1,f_zero=-1;
+    vector<ll>cont(n,1);
+    for(int i=0;i<n;i++){
+        if(i>0){
+            if(s[i-1] == s[i]) cont[i]=cont[i-1]+1;
+        }
+        if(s[i] == '1' && f_one<0) f_one=i+1;
+        if(s[i] == '0' && f_zero<0) f_zero=i+1;
+    }
+    // for(auto &x:cont) cout<<x<<" ";
+    // cout<<endl;
     for(int i=1;i<n;i++)
     {
-        if(s[i]=='0') one[i]=one[i-1]+1;
-        else one[i]=one[i-1];
-    }
-    one[1]=0;
-    // for(auto &x:one) cout<<x<<" ";
-    vector<ll>ans;
-    // ans.pb(1);
-    // for(int i=0;i<n/;i++) one[i]=0;
-    ll k=0;
-    for(int i=0;i<n-1;i++)
-    {
-        if( s[i] == '0'){
-            ans.pb(i+1-one[k]);
-             one[k]++;
-             one[k+1]=0;
+        if(f_zero<=i && f_one<=i) {
+            ll temp = i+1-cont[i-1];
+            cout<<temp<<" ";
         }
-        else{
-            ans.pb(i+1-one[k+1]);
-             one[k+1]++;
-             one[k]=0;
-        }
+        else cout<<1<<" ";
     }
-    for(int i=0;i<ans.size();i++) cout<<ans[i]<<" ";
     cout<<endl;
 }
 return 0;
