@@ -31,49 +31,42 @@ ll lcm(ll a, ll b){return ((a/gcd(a,b))*b);}
 ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod;a =(a%mod*a%mod)%mod;b >>= 1;}return ans%mod;}
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
-
-
-ll good(vector<ll>&vec,ll k)
+bool good (vector<ll>vec,ll k)
 {
-    ll n=vec.size();
-    multiset<ll,greater<ll>>mul;
-    for(int i=0;i<n;i++)
+    ll count=0,temp=k;
+    for(int i=0;i<vec.size();i++)
     {
-        mul.insert(vec[i]);
-    }
-    while(k--){
-        if(mul.size()==0 ) break;
-        auto up=upper_bound(mul.begin(),mul.end(),k);
-        if(up == mul.begin()) return 0;
-        mul.erase(--up);
-        if(mul.size()>=1) mul.erase()
-    }
-
-}
-for(int rem = k ; rem>=1 ; rem-- ){
-                if(mst.size()==0) return 0 ;
- 
-                auto it = mst.upper_bound(rem) ;
- 
-                if(it==mst.begin()){
-                        return 0 ;
-                }
-                --it ;
-                mst.erase(it) ;
-                if(mst.size())
-                        mst.erase(mst.begin()) ;
+        ll upp=upper_bound(vec.begin(),vec.end(),temp)-vec.begin();
+        if(upp == 0){
+            break;
         }
+        else{
+            vec[upp-1]=INT_MAX;
+        }
+        vec[0]+=k;
+        sort(vec.begin(),vec.end());
+        count++;
+        temp--;
+    }
+    return (count == k);
+}
+
 int32_t main(){
 fast
 ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n; vector<ll>vec(n); cin>>vec;
-    ll k=106,mx=INT_MIN;
+    ll k=106,mx=INT_MIN,ans=0;
+    sort(vec.begin(),vec.end());
     for(int i=k;i>=0;i--)
     {
-        mx=max(mx,good(vec,k));
+       if(good(vec,i)) {
+        ans=i;
+        break;
+       }
     }
+    cout<<ans<<endl;
 }
 return 0;
 }

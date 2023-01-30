@@ -34,35 +34,56 @@ bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  re
 
 
 
-bool isPowerOfTwo(int n)
+bool isPowerOfTwo(ll n)
 {
     if (n == 0)
         return false;
  
     return (ceil(log2(n)) == floor(log2(n)));
 }
+
+ll findTwo(ll x)
+{
+    return log2(x & -x);
+}
 int32_t main(){
 fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
+    ll n; cin>>n; ll req=n;
     vector<ll>vec(n); cin>>vec;
-    ll ans=0;
+    ll twos_index= log2(n); // 2's power index
+    ll twos=0;
     for(int i=0;i<n;i++)
     {
-        ll aa=vec[i];
-        if(isPowerOfTwo(vec[i])==true) ans++;
+        // cout<<findTwo(vec[i])<<endl;
+        twos+=findTwo(vec[i]);
     }
-    if(ans==n) cout<<"0"<<endl;
+    req-=twos;
+    // cout<<twos_index<<" "<<req<<endl;
+    if(req<=0) cout<<"0"<<endl;
     else{
-        ll temp=ceil(log2(n));
-        cout<<temp<<endl;
-        if(temp+ans<n) cout<<"-1"<<endl;
-        else cout<<n-ans<<endl;
+        ll sum=0,count=0,flag=0;
+        vector<ll>ans;
+        for(int i=1;i<=n;i++)
+        {
+            ans.pb(findTwo(i));
+        }
+        sort(ans.begin(),ans.end());
+        // for(auto &x:ans) cout<<x<<" ";
+        // cout<<endl;
+        for(int i=n-1;i>=0;i--)
+        {
+            sum+=ans[i];
+            count++;
+            if(sum>=req){
+                flag=1; break;
+            }
+        }
+        if(flag) cout<<count<<endl;
+        else cout<<"-1"<<endl;
     }
-  
-
 }
 return 0;
 }

@@ -32,38 +32,49 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-
-
-bool divv(ll a,ll b)
+bool cmp(pair<ll, ll>& a,
+        pair<ll, ll>& b)
 {
-    for (int i=2; i<=sqrt(a); i++)
-    {
-        if (a%i == 0)
-        {
-            if(a/i==b || i==b) return true;
-        }
-    }
-    return false;
+    return a.second > b.second;
 }
+
+
 int32_t main(){
 fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
-    vector<ll>vec(n); cin>>vec;
-    if(n<3) cout<<"YES"<<endl;
-    else{
-        bool flag =0;
-        for(int i=1;i<n-1;i++)
-        {
-            if((vec[i]%__gcd(vec[i-1],vec[i+1]))) {
-                flag=1; break;
-            }
-        }
-        if(flag) cout<<"NO"<<endl;
-        else cout<<"YES"<<endl;
+    ll n,m;
+    cin>>n>>m;
+    vector<ll>food(n); cin>>food;
+    vector<ll>capacity(m); cin>>capacity;
+    map<ll,ll>mpp;
+    for(int i=0;i<n;i++) mpp[food[i]]++;
+    sort(capacity.begin(),capacity.end());
+    priority_queue<ll>pq;
+    ll ans=0,j=m-1;
+    for(auto &x:mpp)
+    {
+        pq.push(x.second);
     }
+    while(j>=0 && !pq.empty())
+    {
+        ll temp=pq.top();
+        pq.pop();
+        if(capacity[j]>=temp){
+            ans+=temp;
+            j--;
+        }
+        else{
+            ll max_c=capacity[j];
+            ll diff=temp-capacity[j];
+            ans+=max_c;
+            pq.push(diff);
+            j--;
+        }
+    }
+    cout<<ans<<endl;
+
 }
 return 0;
 }

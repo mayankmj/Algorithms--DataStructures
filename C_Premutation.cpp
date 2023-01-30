@@ -34,36 +34,61 @@ bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  re
 
 
 
-bool divv(ll a,ll b)
-{
-    for (int i=2; i<=sqrt(a); i++)
-    {
-        if (a%i == 0)
-        {
-            if(a/i==b || i==b) return true;
-        }
-    }
-    return false;
-}
+
 int32_t main(){
 fast
 ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    vector<ll>vec(n); cin>>vec;
-    if(n<3) cout<<"YES"<<endl;
-    else{
-        bool flag =0;
-        for(int i=1;i<n-1;i++)
+    ll arr[n][n];
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n-1;j++)
         {
-            if((vec[i]%__gcd(vec[i-1],vec[i+1]))) {
-                flag=1; break;
+            ll x; cin>>x; 
+            arr[i][j]=x;
+        }
+    } // input
+    vector<ll>ans;
+    vector<ll>freq(105,0);
+    for(int i=0;i<n;i++)
+    {
+        freq[arr[i][0]]++;
+    }
+    ll mx=*max_element(freq.begin(),freq.end());
+    vector<ll>visited(n+1,0);
+    for(int i = 0;i<n+1;i++){
+        if(freq[i] == mx) {
+            ans.pb(i);
+            visited[i]=1;
+            break;
+        }
+    }
+    // for(auto &x:ans) cout<<x<<" ";
+    // cout<<endl;
+    
+    for(int i=0;i<n-1;i++)
+    {
+        map<ll,ll>mpp;
+        for(int j=0;j<n;j++)
+        {
+            mpp[arr[j][i]]++;
+        }
+        ll mx=0,aa=0;
+        for(auto &x:mpp) {
+            if(!visited[x.first]){
+                if(mx<x.second) {
+                    mx=x.second;
+                    aa=x.first;
+                }
             }
         }
-        if(flag) cout<<"NO"<<endl;
-        else cout<<"YES"<<endl;
+        ans.pb(aa);
+        visited[aa]=1;
     }
+    for(auto &x:ans) cout<<x<<" ";
+    cout<<endl;
 }
 return 0;
 }

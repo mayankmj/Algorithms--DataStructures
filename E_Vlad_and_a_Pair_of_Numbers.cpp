@@ -32,38 +32,50 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-
-
-bool divv(ll a,ll b)
+void ans_finder(unsigned ll int S,
+            unsigned ll int X)
 {
-    for (int i=2; i<=sqrt(a); i++)
+    unsigned ll int A = (S - X)/2;
+ 
+   ll a = 0, b = 0;
+ 
+    for (int i=0; i<8*sizeof(S); i++)
     {
-        if (a%i == 0)
+        unsigned long int Xi = (X & (1 << i));
+        unsigned long int Ai = (A & (1 << i));
+        if (Xi == 0 && Ai == 0)
         {
-            if(a/i==b || i==b) return true;
+            continue;
+        }
+        else if (Xi == 0 && Ai > 0)
+        {
+            a = ((1 << i) | a);
+            b = ((1 << i) | b);
+        }
+        else if (Xi > 0 && Ai == 0)
+        {
+            a = ((1 << i) | a);
+        }
+        else 
+        {
+            cout <<"-1"<<endl;
+            return ;
         }
     }
-    return false;
+    cout<<a<<" "<<b<<endl;
+ 
 }
+
+
 int32_t main(){
 fast
 ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    vector<ll>vec(n); cin>>vec;
-    if(n<3) cout<<"YES"<<endl;
-    else{
-        bool flag =0;
-        for(int i=1;i<n-1;i++)
-        {
-            if((vec[i]%__gcd(vec[i-1],vec[i+1]))) {
-                flag=1; break;
-            }
-        }
-        if(flag) cout<<"NO"<<endl;
-        else cout<<"YES"<<endl;
-    }
+    ll x=2*n;
+    if(n%2==1) cout<<"-1"<<endl;
+    else ans_finder(x,n);
 }
 return 0;
 }

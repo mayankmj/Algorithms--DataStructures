@@ -34,36 +34,28 @@ bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  re
 
 
 
-bool divv(ll a,ll b)
-{
-    for (int i=2; i<=sqrt(a); i++)
-    {
-        if (a%i == 0)
-        {
-            if(a/i==b || i==b) return true;
-        }
-    }
-    return false;
-}
 int32_t main(){
 fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
-    vector<ll>vec(n); cin>>vec;
-    if(n<3) cout<<"YES"<<endl;
-    else{
-        bool flag =0;
-        for(int i=1;i<n-1;i++)
-        {
-            if((vec[i]%__gcd(vec[i-1],vec[i+1]))) {
-                flag=1; break;
-            }
-        }
-        if(flag) cout<<"NO"<<endl;
-        else cout<<"YES"<<endl;
+    ll a,b,c,d; cin>>a>>b>>c>>d;
+    if(a == 0){
+        cout<<min(1ll,a+b+c+d)<<endl;
+        continue;
     }
+    else if(a!=0 &&b==c && c==d && c==0){
+        cout<<a<<endl;
+        continue;
+    }
+    ll ans=a; // initial points
+    ans+=2*a*(min(b,c)/a); // points remaining same
+    
+    ans+=2*(min(c,b)%a);
+
+    ll rem = max(c,b)+d-(min(b,c));
+    ans+=min(a+1,rem);
+    cout<<ans<<endl;
 }
 return 0;
 }

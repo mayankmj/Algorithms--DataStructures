@@ -32,19 +32,28 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-
-
-bool divv(ll a,ll b)
+ll ans_finder(vector<ll>&nums, ll k)
 {
-    for (int i=2; i<=sqrt(a); i++)
+    unordered_set<ll> map;
+    int left = 0, res = -1, sum = 0;
+    for(int right = 0; right<nums.size(); right++)
     {
-        if (a%i == 0)
+        while(left < right && (map.count(nums[right]) || map.size() >= k))
         {
-            if(a/i==b || i==b) return true;
+            sum -= nums[left];
+            map.erase(nums[left]);
+            left++;
         }
+        sum +=nums[right];
+        map.insert(nums[right]);
+            
+        if (map.size() == k)
+            res = max(res, sum);
     }
-    return false;
+    return res;
 }
+
+
 int32_t main(){
 fast
 ll t=1;
@@ -52,18 +61,9 @@ cin>>t;
 while(t--){
     ll n; cin>>n;
     vector<ll>vec(n); cin>>vec;
-    if(n<3) cout<<"YES"<<endl;
-    else{
-        bool flag =0;
-        for(int i=1;i<n-1;i++)
-        {
-            if((vec[i]%__gcd(vec[i-1],vec[i+1]))) {
-                flag=1; break;
-            }
-        }
-        if(flag) cout<<"NO"<<endl;
-        else cout<<"YES"<<endl;
-    }
+    ll k; cin>>k;
+    ll ans = ans_finder(vec,k);
+    cout<<ans<<endl;
 }
 return 0;
 }

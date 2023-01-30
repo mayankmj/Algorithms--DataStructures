@@ -32,26 +32,26 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-ll countSubarrWithEqualZeroAndOne(ll arr[], ll  n)
-{
-    unordered_map<ll, ll> um;
-    ll curr_sum = 0;
 
-    for (int i = 0; i < n; i++) {
-        curr_sum += (arr[i] == 0) ? -1 : arr[i];
-        um[curr_sum]++;
+void dfs(map<ll,vector<ll>>&parent,string s,vector<pair<ll,ll>>&colors , ll curr_parent,ll white,ll black){
+    ll tt= parent[curr_parent].size();
+    if(tt == 0) return;
+    for(int i=0;i<parent[curr_parent].size();i++){
+        white=0;black=0;
+        // dfs call // white,black;
+        ll pp=parent[curr_parent][i];
+        dfs(parent,s,colors,pp,white,black);
+        if(s[pp-1] == 'W') white++;
+        else black++;
+        colors[pp].first+=white;
+        colors[pp].ss+=black;
+        // cout<<curr_parent<<" "<<white<<" "<<black<<endl;
+        colors[curr_parent].first+=colors[pp].ff;
+        colors[curr_parent].ss+=colors[pp].ss;
     }
-    ll  count = 0;
-    for (auto itr = um.begin(); itr != um.end(); itr++) {
-        if (itr->second > 1)
-            count
-                += ((itr->second * (itr->second - 1)) / 2);
-    }
-    if (um.find(0) != um.end())
-        count += um[0];
- 
-    return count;
-}
+    // cout<<curr_parent<<" a "<<white<<" b "<<black<<endl;
+    
+ }
 
 
 int32_t main(){
@@ -60,21 +60,29 @@ ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    vector<ll>vec(n-1); cin>>vec;
-    string s; cin>>s; 
-    ll arr[n];
-    for(int i=0;i<n;i++){
-        if(s[i]=='W') arr[i]=0;
-        else arr[i]=1;
+    map<ll,vector<ll>>parent;
+    for(int i=2;i<=n;i++)
+    {
+        ll x; cin>>x;
+        if( x== i) continue;
+        parent[x].pb(i);
     }
-    // for(int i=0;i<n;i++) cout<<arr[i]<<" ";
-    // cout<<endl;
-    ll count = countSubarrWithEqualZeroAndOne(arr,n);
-    ll c=0;
-    for(int i=0;i<n-1;i++){
-        if(s[i] != s[i+1]) c++;
+    string s; cin>>s;
+    vector<pair<ll,ll>>colors;
+    for(int i=0;i<=n;i++)
+    {
+        colors.pb(make_pair(0ll,0ll));
     }
-    cout<<c<<" "<<count<<endl;
+    ll ans=0;
+    dfs(parent,s,colors,1,0,0);
+    if(s[0] == 'W') colors[1].ff+=1;
+    else colors[1].ss+=1;
+    for(int i=1;i<=n;i++)
+    {
+        if(colors[i].ff == colors[i].ss &&& colors[i].ff !=0) ans++;
+        // cout<<i<<" "<<colors[i].ff<<" "<<colors[i].ss<<endl;
+    }
+    cout<<ans<<endl;
 }
 return 0;
 }

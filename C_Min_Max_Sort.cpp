@@ -32,19 +32,25 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-
-
-bool divv(ll a,ll b)
-{
-    for (int i=2; i<=sqrt(a); i++)
-    {
-        if (a%i == 0)
-        {
-            if(a/i==b || i==b) return true;
-        }
-    }
-    return false;
+ll lengthOfLIS(vector<ll> &nums) {
+    if(nums.size() == 0)
+    return 0;
+    vector<ll>dp;
+     dp.push_back(nums[0]);
+    for(int i = 1; i < nums.size(); i++){
+       bool flag = false;
+      for(int j = 0; j < dp.size(); j++){
+     if(nums[i] <= dp[j]){
+    dp[j] = nums[i];
+      flag = true;
+      break; 
+         } 
+       }
+   if(!flag)dp.push_back(nums[i]);
+  }
+return dp.size();
 }
+
 int32_t main(){
 fast
 ll t=1;
@@ -52,17 +58,41 @@ cin>>t;
 while(t--){
     ll n; cin>>n;
     vector<ll>vec(n); cin>>vec;
-    if(n<3) cout<<"YES"<<endl;
-    else{
-        bool flag =0;
-        for(int i=1;i<n-1;i++)
+    ll count=0;
+    if(vec[0]!=1) count++;
+    if(vec[n-1]!=n) count++;
+    ll tt1=1e16;
+    if(is_sorted(vec.begin(),vec.end())) cout<<"0"<<endl;
+    else if(count == 2){
+        vector<ll>ans;
+        ans.pb(1);
+        for(int i=0;i<n;i++)
         {
-            if((vec[i]%__gcd(vec[i-1],vec[i+1]))) {
-                flag=1; break;
-            }
+            if(vec[i] == 1 || vec[i] == n) continue;
+            ans.pb(vec[i]);
         }
-        if(flag) cout<<"NO"<<endl;
-        else cout<<"YES"<<endl;
+        ans.pb(n);
+        tt1=n-lengthOfLIS(ans)+1;
+        ll tt2=ceil(n/2.0);
+        ll tt=n-lengthOfLIS(vec);
+        cout<<min({tt,tt1,tt2})<<endl;
+    }
+    else if(count == 0){
+        ll mx=0;
+        for(int i=0;i<n;i++)
+        {
+            mx=max(mx,abs(i+1-vec[i])+1);
+        }
+        ll opt1=ceil(n/2.0);
+        cout<<min(opt1,mx)<<endl;
+    }
+    else{
+        ll count=0;
+       for(int i=0;i<n;i++)
+       {
+           if(vec[i] != i+1) count++;
+       }
+       
     }
 }
 return 0;

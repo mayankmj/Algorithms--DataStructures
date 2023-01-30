@@ -34,36 +34,16 @@ bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  re
 
 
 
-bool divv(ll a,ll b)
-{
-    for (int i=2; i<=sqrt(a); i++)
-    {
-        if (a%i == 0)
-        {
-            if(a/i==b || i==b) return true;
-        }
-    }
-    return false;
-}
+
 int32_t main(){
 fast
 ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    vector<ll>vec(n); cin>>vec;
-    if(n<3) cout<<"YES"<<endl;
-    else{
-        bool flag =0;
-        for(int i=1;i<n-1;i++)
-        {
-            if((vec[i]%__gcd(vec[i-1],vec[i+1]))) {
-                flag=1; break;
-            }
-        }
-        if(flag) cout<<"NO"<<endl;
-        else cout<<"YES"<<endl;
-    }
+    ll flag=0;
+    if(n%2) cout<<"-1"<<endl;
+    else cout<<"1 "<<n/2<<endl;
 }
 return 0;
 }

@@ -50,27 +50,32 @@ ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    string s; cin>>s;
-    ll f_one=-1,f_zero=-1;
-    vector<ll>cont(n,1);
-    for(int i=0;i<n;i++){
-        if(i>0){
-            if(s[i-1] == s[i]) cont[i]=cont[i-1]+1;
-        }
-        if(s[i] == '1' && f_one<0) f_one=i+1;
-        if(s[i] == '0' && f_zero<0) f_zero=i+1;
-    }
-    // for(auto &x:cont) cout<<x<<" ";
+    // string s; cin>>s;
+    // ll f_one=-1,f_zero=-1;
+    // vector<ll>cont(n,1);
+    // for(int i=0;i<n;i++){
+    //     if(i>0){
+    //         if(s[i-1] == s[i]) cont[i]=cont[i-1]+1;
+    //     }
+    //     if(s[i] == '1' && f_one<0) f_one=i+1;
+    //     if(s[i] == '0' && f_zero<0) f_zero=i+1;
+    // }
+    // // for(auto &x:cont) cout<<x<<" ";
+    // // cout<<endl;
+    // for(int i=1;i<n;i++)
+    // {
+    //     if(f_zero<=i && f_one<=i) {
+    //         ll temp = i+1-cont[i-1];
+    //         cout<<temp<<" ";
+    //     }
+    //     else cout<<1<<" ";
+    // }
     // cout<<endl;
-    for(int i=1;i<n;i++)
-    {
-        if(f_zero<=i && f_one<=i) {
-            ll temp = i+1-cont[i-1];
-            cout<<temp<<" ";
-        }
-        else cout<<1<<" ";
-    }
-    cout<<endl;
+    vector<pair<ll,ll>>vec;
+    for(int i=0;i<n;i++) vec.pb(make_pair(0ll,0ll));
+    vec[1].first=5;
+    vec[2].second=6;
+    for(int i=0;i<n;i++) cout<<vec[i].ff<<" "<<vec[i].second<<endl;
 }
 return 0;
 }
