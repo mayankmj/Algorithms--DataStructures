@@ -40,25 +40,26 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
-    map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
-    }
-    for(int i=0;i<m;i++)
-    {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
-    }
-    ll ans = n;
+    ll n,w,h; cin>>n>>w>>h;
+    vector<ll>vec(n); cin>>vec;
+    vector<ll>v(n); cin>>v;
+    ll temp1 = -h+w , temp2=-w+h;
+    ll mn = vec[0]-w+h,mx=vec[0]+w-h;
+    vector<ll>diff1,diff2;
     for(int i=1;i<n;i++)
     {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
+        diff1.pb(v[i]-v[i-1]);
     }
-    cout<<ans<<endl;
+    ll tt = h+w+1;
+    for(int i=1;i<n;i++){
+        ll x = vec[i]+temp1;
+        ll y = vec[i]+temp2;
+        mpp[x]++;
+        mx = min(mx+diff1[i-1],x);
+        mn = max(mn+diff1[i-1],y); 
+    }
+    if(mx>= mn)cout<<"YES"<<endl;
+    else cout<<"NO"<<endl;
 }
 return 0;
 }

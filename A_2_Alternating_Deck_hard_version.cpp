@@ -40,25 +40,47 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
-    map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
-    }
-    for(int i=0;i<m;i++)
+    ll n; cin>>n;
+    ll alice_w=1,alice_b=0,bob_w=0,bob_b=0,ori_n=n,flag=0;
+    n--;
+    for(int i=2;i<=ori_n;i++)
     {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
+        ll temp = i;
+        if(n==0) break;
+        if(n<i) {
+            flag=1;
+            temp = n;
+        }
+        if(i%4 == 0){
+            alice_w+=temp/2;
+            alice_b+=temp/2;
+            if(flag){
+                if(temp%2) alice_w++;
+            }
+        }
+        else if(i%4 == 1){
+            alice_w+=((temp/2)+1);
+            alice_b+=temp/2;
+            if(flag && temp%2 ==0) alice_w--;
+        }
+        else if(i%4 == 3){
+            bob_w+=temp/2;
+            bob_b+=((temp/2)+1);
+            if(flag && temp%2 == 0) bob_b--;
+        }
+        else {
+            bob_w+=temp/2;
+            bob_b+=temp/2;
+            if(flag){
+                if(temp%2) bob_b++;
+            }
+        }
+        n-=i;
+        if(flag) break;
+        // cout<<n<<" ";
+        //   cout<<alice_w<<" "<<alice_b<<" "<<bob_w<<" "<<bob_b<<" "<<n<<endl;
     }
-    ll ans = n;
-    for(int i=1;i<n;i++)
-    {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
-    }
-    cout<<ans<<endl;
+    cout<<alice_w<<" "<<alice_b<<" "<<bob_w<<" "<<bob_b<<endl;
 }
 return 0;
 }

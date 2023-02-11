@@ -32,33 +32,57 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-
-
+ll calc(ll a)
+{
+    ll sum=0;
+    while(a)
+    {
+        sum+=a%10;
+        a/=10;
+    }
+    return sum;
+}
 
 int32_t main(){
 fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
-    map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
-    }
-    for(int i=0;i<m;i++)
+    ll n,q; cin>>n>>q;
+    vector<ll>vec(n); cin>>vec;
+    set<ll>s;
+    for(int i=0;i<n;i++)
     {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
+        if(vec[i]>9) s.insert(i);
     }
-    ll ans = n;
-    for(int i=1;i<n;i++)
+    s.insert(mod);
+    while(q--)
     {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
+        ll type; cin>>type;
+        if( type == 1)
+        {
+            ll a,b; 
+            cin>>a>>b;
+            a--; b--;
+            while (a <= b)
+                  {
+                        a = *s.lower_bound(a);
+                        if(a>b)
+                              break;
+                        int temp = calc(vec[a]);
+                        if (vec[a] == temp)
+                        {
+                              s.erase(a);
+                        }
+                        vec[a] = temp;
+                        a++;
+                  }
+        }
+        else{
+            ll ind; cin>>ind;
+            cout<<vec[ind-1]<<endl;
+        }
     }
-    cout<<ans<<endl;
 }
 return 0;
 }

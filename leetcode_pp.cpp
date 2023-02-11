@@ -40,25 +40,35 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
+    ll n,k; cin>>n>>k;
+    vector<ll>vec(n); cin>>vec;
     map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
-    }
-    for(int i=0;i<m;i++)
+    for(auto &x:vec) mpp[x]++;
+    ll sum=0,count=0;
+    vector<ll>ans;
+    ll high = k+1 , low = 1;
+   
+    for(auto &x:mpp)
     {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
+        if(x.ff>high){
+            ans.pb(sum);
+            sum =0 ;
+            low+=max(k,1ll);
+            high+=max(k,1ll);
+        }
+        cout<<low<<" "<<high<<" "<<x.ff<<endl; 
+        if(x.ff>=low && x.ff<=high) sum+=x.ss;
+    } 
+    ans.pb(sum);
+    sort(ans.begin(),ans.end(),greater<int>());
+    ll tt=0 , cc=0;
+    for(auto &x:ans){
+        cc++; tt+=x;
+        // if(cc>=2) break;
+        cout<<x<<" ";
     }
-    ll ans = n;
-    for(int i=1;i<n;i++)
-    {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
-    }
-    cout<<ans<<endl;
+    // cout<<tt<<endl;
+
 }
 return 0;
 }

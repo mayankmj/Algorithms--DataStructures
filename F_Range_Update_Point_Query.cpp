@@ -16,7 +16,7 @@ using namespace std;
 #define array_input(n,arr) for(int i=0;i<n;i++) cin>>arr[i] 
 #define array_output(n,arr) for(int i=0;i<n;i++) cout<<arr[i]<<endl
 #define print(vec) for(auto &x:vec) cout<<x<< 
-  
+  #define endl '\n'
 #define fast ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 template <typename T> //cin for vector
 istream &operator>>(istream &istream, vector<T> &v){
@@ -32,33 +32,48 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-
-
+ll digit_sum(ll a)
+{
+    ll sum=0;
+    while(a)
+    {
+        sum+=a%10;
+        a/=10;
+    }
+    return sum;
+}
 
 int32_t main(){
 fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
-    map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
+    int n, q; cin >> n >> q;
+    vector<int> a(n);
+    set<int> s;
+    for(int i = 0; i < n; ++i) {
+        cin >> a[i];
+        if(a[i] > 9) s.insert(i);
     }
-    for(int i=0;i<m;i++)
-    {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
+    while(q--) {
+        int type; cin >> type;
+        if(type == 1) {
+            int l, r; cin >> l >> r; --l, --r;
+            int lst = l;
+            while(!s.empty()) {
+                auto it = s.lower_bound(lst);
+                if(it == s.end() || *it > r) break;
+                a[*it] = digit_sum(a[*it]);
+                int paiu = *it;
+                s.erase(it);
+                if(a[paiu] > 9) s.insert(paiu);
+                lst = paiu + 1;
+            }
+        } else {
+            int x; cin >> x; --x;
+            cout << a[x] << "\n";
+        }
     }
-    ll ans = n;
-    for(int i=1;i<n;i++)
-    {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
-    }
-    cout<<ans<<endl;
 }
 return 0;
 }

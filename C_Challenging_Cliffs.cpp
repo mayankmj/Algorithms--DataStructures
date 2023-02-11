@@ -40,25 +40,8 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
-    map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
-    }
-    for(int i=0;i<m;i++)
-    {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
-    }
-    ll ans = n;
-    for(int i=1;i<n;i++)
-    {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
-    }
-    cout<<ans<<endl;
+    ll n; cin>>n;
+    vector<ll>vec(n); cin>>vec;
 }
 return 0;
 }

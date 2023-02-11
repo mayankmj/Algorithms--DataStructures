@@ -40,25 +40,49 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
-    map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
-    }
-    for(int i=0;i<m;i++)
+    ll n; cin>>n;
+   
+    if(n %2==0) cout<<"NO"<<endl;
+    else if(n==1) cout<<"YES"<<endl<<"1 2"<<endl;
+    else{
+          n=n*2;
+    vector<ll>vec(n);
+    for(int i=0;i<n;i++) vec[i]=i+1;
+    ll j=n,count=0;
+    vector<pair<ll,ll>>ans;
+    ll cc=(n/2)/2+1;
+    for(int i=1;i<=n;i=i+2)
     {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
+        if(j-1>i){
+            ans.pb({i,j});
+            j--;
+        }
+        else {
+            count=j;
+            break;
+        }
+        cc--;
+        if(cc == 0) break;
     }
-    ll ans = n;
-    for(int i=1;i<n;i++)
+    // reverse(ans.begin(),ans.end());
+    vector<pair<ll,ll>>ans2;
+    j=n-((n/2)/2+1);
+    cc=(n/2)/2;
+    // cout<<count<<" "<<j<<endl;
+    for(int i=2;i<=n;i+=2)
     {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
+         if(j>i){
+            ans2.pb({i,j});
+            j--;
+         }
+         cc--;
+         if(cc == 0) break;
     }
-    cout<<ans<<endl;
+    cout<<"YES"<<endl;
+    // reverse(ans2.begin(),ans2.end());
+    for(auto &x:ans2) cout<<x.ff<<" "<<x.ss<<endl;
+    for(auto &x:ans) cout<<x.ff<<" "<<x.ss<<endl;
+    }
 }
 return 0;
 }

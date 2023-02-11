@@ -32,7 +32,27 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-
+bool diff(ll a, ll b)
+{
+    ll ad=0,bd=0,i=0;
+    while(a>0)
+    {
+        ll temp=a%10;
+        ad+=temp;
+        a/=10;
+        i++;
+    }
+    i=0;
+    while(b>0)
+    {
+        ll temp=b%10;
+        bd+=temp;
+        b/=10;
+        i++;
+    }
+    if(bd-ad == 0 || bd-ad == 1) return 1;
+    return 0;
+}
 
 
 int32_t main(){
@@ -40,25 +60,36 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
-    map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
+    ll n; cin>>n;
+    if(n%2==0) cout<<n/2<<" "<<n/2<<endl;
+    else {
+        string s=to_string(n);
+        string a="",b="";
+        ll flag=0;
+        for(int i=0;i<s.size();i++)
+        {
+            ll x =s[i]-'0',temp=x/2;
+            string aa=to_string(temp) , bb=to_string(temp+1);
+            // cout<<aa<<" "<<bb<<" "<<x<<endl;
+            if(x == 0){
+                a+="0"; b+="0";
+            }
+            else if(x%2==1){
+                if(flag%2==1) a+=aa,b+=bb;
+                else a+=bb,b+=aa;
+                flag++;
+            }
+            else{
+                a+=aa; b+=aa;
+            }
+        }
+        ll x=stoi(a);
+        ll y=stoi(b);
+        cout<<x<<" "<<y<<endl;
+        //  cout<<ans<<" "<<n-ans<<endl;
+        // cout<<ans<<" "<<n-ans<<endl;
+
     }
-    for(int i=0;i<m;i++)
-    {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
-    }
-    ll ans = n;
-    for(int i=1;i<n;i++)
-    {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
-    }
-    cout<<ans<<endl;
-}
+ }
 return 0;
 }

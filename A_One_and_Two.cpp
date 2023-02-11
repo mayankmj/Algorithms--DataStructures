@@ -40,25 +40,57 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
-    map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
-    }
-    for(int i=0;i<m;i++)
+    ll n; cin>>n;
+    vector<ll>vec(n); cin>>vec;
+    vector<ll>sum(n,1),mul(n,1);
+    sum[0]=vec[0];
+    for(int i=1;i<n;i++) sum[i]=(vec[i]*sum[i-1])%mod;
+    mul[n-1]=vec[n-1];
+    for(int i=n-2;i>=0;i--)
     {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
+        mul[i]=(mul[i+1]*vec[i])%mod;
     }
-    ll ans = n;
-    for(int i=1;i<n;i++)
+    ll flag=0,ans=0;
+    for(int i=0;i<n-1;i++)
     {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
+        if(sum[i] == mul[i+1]){
+            flag=1;
+            cout<<i+1<<endl;
+            break;
+        }
     }
-    cout<<ans<<endl;
+    if(!flag) cout<<"-1"<<endl;
+
+
+
+
+
+
+
+
+
+
+    // for(auto &x:mul) cout<<x<<" ";
+    // cout<<endl;
+    // ll two=0;
+    // for(int i=0;i<n;i++){
+    //     if(vec[i] ==2) two++;
+    // }
+    // if(two ==0) cout<<"1"<<endl;
+    // else if(two%2!=0) cout<<"-1"<<endl;
+    // else{
+    //     ll ind=two/2,ans=0;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         if(vec[i] ==2){
+    //             ans++;
+    //         }
+    //         if(ans == ind) {
+    //             cout<<i+1<<endl;
+    //             break;
+    //         }
+    //     }
+    // }
 }
 return 0;
 }

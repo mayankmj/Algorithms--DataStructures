@@ -40,25 +40,38 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
-    map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
-    }
-    for(int i=0;i<m;i++)
+    ll n; cin>>n;
+    vector<ll>vec(n); cin>>vec;
+    sort(vec.begin (),vec.end());
+    ll ans =vec[0]-1;
+    vec[0]=1;
+    for(int i=0;i<n-1;i++)
     {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
+        if(vec[i+1]-vec[i]>1) {
+            ans+=(vec[i+1]-vec[i]-1);
+            vec[i+1]=vec[i]+1;
+        }
     }
-    ll ans = n;
-    for(int i=1;i<n;i++)
-    {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
-    }
-    cout<<ans<<endl;
+     cout<<ans<<endl;
 }
 return 0;
 }
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int t;cin>>t;while(t--){
+    int n,x,y;cin>>n>>x>>y;
+    int a[n];for(int i=0;i<n;i++)cin>>a[i];
+    int b[n];for(int i=0;i<n;i++)cin>>b[i];
+    int mn = a[0]-x+y,mx=a[0]+x-y;
+    for(int i=1;i<n;i++){
+        mx = min(mx+b[i]-b[i-1],a[i]+x-y);
+        mn = max(mn+b[i]-b[i-1],a[i]-x+y);
+    }
+    if(mx>=mn){cout<<"Yes\n";}
+    else {cout<<"No\n";}
+    }
+    return 0;
+}B

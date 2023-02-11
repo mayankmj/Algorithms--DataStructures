@@ -40,23 +40,28 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
-    map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
-    }
-    for(int i=0;i<m;i++)
+    ll n; cin>>n;
+    vector<ll>vec(n); cin>>vec;
+    ll mx = *max_element(vec.begin(),vec.end());
+    ll mn = *min_element(vec.begin(),vec.end());
+    sort(vec.begin(),vec.end());
+    ll maxi = mx-mn + mx-vec[n-2];
+    ll mini = abs(mx-mn) + vec[1]-vec[0];
+    ll ans =max(maxi,mini) ;
+    for(int i=1;i<n-1;i++)
     {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
-    }
-    ll ans = n;
-    for(int i=1;i<n;i++)
-    {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
+        ll x =abs(vec[i]-mx) , y =abs(vec[i]-mn),sum=0;
+        if(x>y){
+            if(i == n-2) sum=abs(vec[i]-vec[i-1]);
+            else sum+=max(abs(vec[i]-vec[i-1]),abs(vec[i]-vec[i+1]));
+            sum+=x;
+        }
+        else{
+            if(i == 1) sum=abs(vec[i]-vec[i+1]);
+            else sum+=max(abs(vec[i]-vec[i-1]),abs(vec[i]-vec[i+1]));
+            sum+=y;
+        }
+        ans=max(sum,ans);
     }
     cout<<ans<<endl;
 }

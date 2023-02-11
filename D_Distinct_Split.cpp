@@ -40,23 +40,25 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll m,n; cin>>n>>m;
-    map<ll,ll>mpp;
-    for(int i=1;i<=n;i++) { 
-        mpp[i]=0;
-    }
-    for(int i=0;i<m;i++)
+    ll n; cin>>n;
+    string s; cin>>s;
+    map<char,ll>mpp;
+    map<char,ll>mpp2;
+    vector<ll>count(n+1,0),count2(n+1,0);
+    for(int i=0;i<n;i++)
     {
-        ll x,y; cin>>x>>y;
-        if(mpp[min(x,y)]) mpp[min(x,y)] = min(mpp[min(x,y)],max(x,y));
-        else mpp[min(x,y)]=max(x,y);
+        mpp[s[i]]++;
+        count[i]=mpp.size();
     }
-    ll ans = n;
-    for(int i=1;i<n;i++)
+    for(int i=n-1;i>=0;i--){
+        mpp2[s[i]]++;
+        count2[i]=mpp2.size();
+    }
+    ll ans=0;
+    for(int i=0;i<n-1;i++)
     {
-        // if(mpp[i]==i) ans--;
-        if(i+1!=mpp[i])
-        ans++;
+        ll x =count[i]+count2[i+1];
+        ans=max(ans,x);
     }
     cout<<ans<<endl;
 }
