@@ -32,26 +32,7 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-ll ans_finder(vector<ll>&nums, ll k)
-{
-    unordered_set<ll> map;
-    int left = 0, res = -1, sum = 0;
-    for(int right = 0; right<nums.size(); right++)
-    {
-        while(left < right && (map.count(nums[right]) || map.size() >= k))
-        {
-            sum -= nums[left];
-            map.erase(nums[left]);
-            left++;
-        }
-        sum +=nums[right];
-        map.insert(nums[right]);
-            
-        if (map.size() == k)
-            res = max(res, sum);
-    }
-    return res;
-}
+
 
 
 int32_t main(){
@@ -59,23 +40,32 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
-    vector<ll>vec(n); cin>>vec;
-    map<ll,ll>mpp;
-    for(auto &x:vec) mpp[x]++;
-    ll ans=0;
-    while(!mpp.empty())
-    {
-        ll start=mpp.begin()->first;
-        while(mpp.find(start)!=mpp.end())
+    string a,b; cin>>a>>b;
+    map<char,ll>mpa,mpb;
+    for(auto &x:a) mpa[x]++;
+    for(auto &x:b) mpb[x]++;
+    if(a == b) {cout<<"YES"<<endl;cout<<"*"<<a<<endl;}
+    else if(a[0] == b[0]) {cout<<"YES"<<endl;cout<<a[0]<<"*"<<endl;}
+    else if(a[a.size()-1] == b[b.size()-1]) {cout<<"YES"<<endl;cout<<"*"<<b[b.size()-1]<<endl;}
+    else{
+        ll a_s=a.size(),b_s=b.size(),flag=0;
+        for(int i=0;i<a_s-1;i++)
         {
-            mpp[start]--;
-            if(mpp[start] == 0) mpp.erase(start);
-            start++;
+            for(int j=0;j<b_s;j++)
+            {
+                if(a[i] == b[j] && a[i+1] == b[j+1]){
+                    cout<<"YES"<<endl;
+                    cout<<"*"<<a[i]<<a[i+1]<<"*"<<endl;
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag) break;
         }
-        ans++;
+        if(!flag) cout<<"NO"<<endl;
+
     }
-    cout<<ans<<endl;
+
 }
 return 0;
 }

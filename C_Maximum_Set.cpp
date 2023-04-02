@@ -2,7 +2,7 @@
 using namespace std;
 #define ll long long
 #define pi (3.141592653589)
-#define mod 1000000007
+#define mod 998244353
 #define float double
 #define pb push_back
 #define mp make_pair
@@ -28,29 +28,23 @@ return istream;
 
 ll gcd(ll a, ll b){if (b == 0)return a;return gcd(b, a % b);}
 ll lcm(ll a, ll b){return ((a/gcd(a,b))*b);}
-ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod;a =(a%mod*a%mod)%mod;b >>= 1;}return ans%mod;}
+ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans*a);a =(a*a);b >>= 1;}return ans;}
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-ll ans_finder(vector<ll>&nums, ll k)
+ll ans_finder(ll l,ll r,ll tt)
 {
-    unordered_set<ll> map;
-    int left = 0, res = -1, sum = 0;
-    for(int right = 0; right<nums.size(); right++)
+    ll left=l,right=r,temp=0;
+    while(left<=right)
     {
-        while(left < right && (map.count(nums[right]) || map.size() >= k))
-        {
-            sum -= nums[left];
-            map.erase(nums[left]);
-            left++;
+        ll mid=(left+right)/2;
+        if(mid*tt>r) right=mid-1;
+        else if(mid*tt<=r) {
+            left=mid+1;
+            temp=mid;
         }
-        sum +=nums[right];
-        map.insert(nums[right]);
-            
-        if (map.size() == k)
-            res = max(res, sum);
     }
-    return res;
+    return temp;
 }
 
 
@@ -59,23 +53,33 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
-    vector<ll>vec(n); cin>>vec;
-    map<ll,ll>mpp;
-    for(auto &x:vec) mpp[x]++;
-    ll ans=0;
-    while(!mpp.empty())
-    {
-        ll start=mpp.begin()->first;
-        while(mpp.find(start)!=mpp.end())
-        {
-            mpp[start]--;
-            if(mpp[start] == 0) mpp.erase(start);
-            start++;
-        }
-        ans++;
+    ll a,b; cin>>a>>b;
+    ll sum=0,mx=0,temp=a;
+    if(a == b) {
+        cout<<"1 1"<<endl;
+        continue;
     }
-    cout<<ans<<endl;
+    while(temp<=b)
+    {
+        temp=temp*2;
+        mx++;
+    }
+    cout<<mx<<" ";
+    ll ans=0;
+    if(mx == 1) cout<<b-a+1<<endl;
+    else{
+         ll tt=binpow(2,mx-2)*3,ex = binpow(2,mx-1);
+         ll last_no=b/ex;
+         ll extra = ans_finder(a,b,tt);
+        //  cout<<last_no<<" "<<extra<<endl;
+         if(extra>=a) {
+            extra = ((extra-a+1)*(mx-1))%mod+(-a+last_no+1)%mod;
+            cout<<extra%mod<<endl;
+         }
+         else {
+            cout<<(-a+last_no+1)%mod<<endl;
+         }
+    }
 }
 return 0;
 }

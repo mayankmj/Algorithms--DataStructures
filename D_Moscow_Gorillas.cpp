@@ -32,50 +32,50 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-ll ans_finder(vector<ll>&nums, ll k)
-{
-    unordered_set<ll> map;
-    int left = 0, res = -1, sum = 0;
-    for(int right = 0; right<nums.size(); right++)
-    {
-        while(left < right && (map.count(nums[right]) || map.size() >= k))
-        {
-            sum -= nums[left];
-            map.erase(nums[left]);
-            left++;
-        }
-        sum +=nums[right];
-        map.insert(nums[right]);
-            
-        if (map.size() == k)
-            res = max(res, sum);
-    }
-    return res;
-}
 
 
 int32_t main(){
 fast
 ll t=1;
-cin>>t;
+// cin>>t;
 while(t--){
     ll n; cin>>n;
-    vector<ll>vec(n); cin>>vec;
-    map<ll,ll>mpp;
-    for(auto &x:vec) mpp[x]++;
-    ll ans=0;
-    while(!mpp.empty())
+    vector<ll>p(n),q(n); cin>>p>>q;
+    vector<bool>check_p(n+1,0),check_q(n+1,0);
+    // ll window=0,ans=1;
+    ll pos_a=0,pos_b=0;
+    for(int i=0;i<n;i++)
     {
-        ll start=mpp.begin()->first;
-        while(mpp.find(start)!=mpp.end())
-        {
-            mpp[start]--;
-            if(mpp[start] == 0) mpp.erase(start);
-            start++;
+        if(p[i] ==1) {
+            pos_a=i+1; break;
         }
-        ans++;
+    }
+    for(int i=0;i<n;i++)
+    {
+        if(q[i] ==1) {
+            pos_b=i+1; break;
+        }
+    }
+    ll ans=0;
+    for(ll i=n;i>=1;i--)
+    {
+        if(i>=min(pos_a,pos_b))
+        ans+=max(0ll,i-min(pos_a,pos_b));
+        else ans+=i;
     }
     cout<<ans<<endl;
+//     for(int i=0;i<n;i++)
+//     {
+//         if(p[i] == 1 || q[i] ==1) {
+//             ans+=(window*(window+1)/2);
+//             window=0;
+//             continue;
+//         }
+//         else window++;
+//     }
+//    ans+=(window*(window+1)/2);
+    cout<<ans<<endl;
+
 }
 return 0;
 }

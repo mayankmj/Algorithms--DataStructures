@@ -70,7 +70,9 @@ while(t--){
         }
         check(prdct,i,temp_x,n);
     }
-    cout<<x<<" "<<y<<endl;
+    if(ans<=1) cout<<"0"<<" "<<n<<endl;
+    else cout<<x<<" "<<y<<endl;
+    ans=0,x=0,y=0;
 }
 return 0;
 }

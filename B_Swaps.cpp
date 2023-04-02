@@ -32,26 +32,7 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-ll ans_finder(vector<ll>&nums, ll k)
-{
-    unordered_set<ll> map;
-    int left = 0, res = -1, sum = 0;
-    for(int right = 0; right<nums.size(); right++)
-    {
-        while(left < right && (map.count(nums[right]) || map.size() >= k))
-        {
-            sum -= nums[left];
-            map.erase(nums[left]);
-            left++;
-        }
-        sum +=nums[right];
-        map.insert(nums[right]);
-            
-        if (map.size() == k)
-            res = max(res, sum);
-    }
-    return res;
-}
+
 
 
 int32_t main(){
@@ -60,20 +41,20 @@ ll t=1;
 cin>>t;
 while(t--){
     ll n; cin>>n;
-    vector<ll>vec(n); cin>>vec;
-    map<ll,ll>mpp;
-    for(auto &x:vec) mpp[x]++;
-    ll ans=0;
-    while(!mpp.empty())
+    vector<ll>a(n),b(n),a_index(2*n+1); cin>>a>>b;
+    set<pair<ll,ll>>st; // in array b i:e -> index,b[i];
+    for(ll i=0;i<n;i++)
     {
-        ll start=mpp.begin()->first;
-        while(mpp.find(start)!=mpp.end())
-        {
-            mpp[start]--;
-            if(mpp[start] == 0) mpp.erase(start);
-            start++;
-        }
-        ans++;
+        a_index[a[i]]=i;
+        a_index[b[i]]=i;
+        st.insert({i,b[i]});
+    }
+    ll ans=INT_MAX;
+    for(int i=1;i<2*n;i+=2)
+    {
+        pair<ll,ll> x = *st.begin();
+        ans=min(ans,a_index[i]+x.ff);
+        st.erase(st.find({a_index[i+1],i+1}));
     }
     cout<<ans<<endl;
 }

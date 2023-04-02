@@ -32,26 +32,7 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-ll ans_finder(vector<ll>&nums, ll k)
-{
-    unordered_set<ll> map;
-    int left = 0, res = -1, sum = 0;
-    for(int right = 0; right<nums.size(); right++)
-    {
-        while(left < right && (map.count(nums[right]) || map.size() >= k))
-        {
-            sum -= nums[left];
-            map.erase(nums[left]);
-            left++;
-        }
-        sum +=nums[right];
-        map.insert(nums[right]);
-            
-        if (map.size() == k)
-            res = max(res, sum);
-    }
-    return res;
-}
+
 
 
 int32_t main(){
@@ -59,23 +40,47 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
-    vector<ll>vec(n); cin>>vec;
-    map<ll,ll>mpp;
-    for(auto &x:vec) mpp[x]++;
-    ll ans=0;
-    while(!mpp.empty())
-    {
-        ll start=mpp.begin()->first;
-        while(mpp.find(start)!=mpp.end())
-        {
-            mpp[start]--;
-            if(mpp[start] == 0) mpp.erase(start);
-            start++;
+   int n;
+    cin>>n;
+    string s;
+    cin>>s;
+    vector<ll>v;
+    bool f=false,fi=false,fa=false,fb=false,fc=true;
+
+    map<char,ll>mpp;
+    for(int i=0;i<n;i++){
+        char ch = tolower(s[i]);
+        mpp[ch]++;
+        if(ch == 'm'){
+            v.pb(0);
+            f=true;
         }
-        ans++;
+        else if(ch == 'e'){
+            v.pb(1);
+            fi=true;
+        }
+        else if(ch == 'o'){
+            v.pb(2);
+            fa=true;
+        }
+        else if(ch == 'w'){
+            v.pb(3);
+            fb=true;
+        }
+        else{
+            fc=false;
+        }
     }
-    cout<<ans<<endl;
+    vector<ll>a(n);
+    a=v;
+    //cout<<va<<endl;
+    sort(a.begin(),a.end());
+    if(!mpp.size() && n == 0) cout<<"0"<<endl;
+    else if(v==a && f && fi && fa && fb && fc ){
+        cout<<"YES\n";
+
+    }
+    else cout<<"NO\n";
 }
 return 0;
 }

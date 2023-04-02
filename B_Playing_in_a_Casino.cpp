@@ -32,26 +32,7 @@ ll binpow(ll a,ll b){ll ans = 1;while(b > 0){if (b & 1)ans = (ans%mod*a%mod)%mod
 bool is_prime(ll n){if(n==2) return true;else if (n <= 1||n>1000000||n%2==0)  return false;for (int i = 3; i*i<= n; i+=2) if (n % i == 0) return false;return true;}
 
 
-ll ans_finder(vector<ll>&nums, ll k)
-{
-    unordered_set<ll> map;
-    int left = 0, res = -1, sum = 0;
-    for(int right = 0; right<nums.size(); right++)
-    {
-        while(left < right && (map.count(nums[right]) || map.size() >= k))
-        {
-            sum -= nums[left];
-            map.erase(nums[left]);
-            left++;
-        }
-        sum +=nums[right];
-        map.insert(nums[right]);
-            
-        if (map.size() == k)
-            res = max(res, sum);
-    }
-    return res;
-}
+
 
 
 int32_t main(){
@@ -59,23 +40,46 @@ fast
 ll t=1;
 cin>>t;
 while(t--){
-    ll n; cin>>n;
-    vector<ll>vec(n); cin>>vec;
-    map<ll,ll>mpp;
-    for(auto &x:vec) mpp[x]++;
-    ll ans=0;
-    while(!mpp.empty())
+    ll n,m; cin>>n>>m;
+    vector<vector<ll>>vec(n,vector<ll>(m,0));
+    for(int i=0;i<n;i++)
     {
-        ll start=mpp.begin()->first;
-        while(mpp.find(start)!=mpp.end())
+        for(int j=0;j<m;j++)
         {
-            mpp[start]--;
-            if(mpp[start] == 0) mpp.erase(start);
-            start++;
+            cin>>vec[i][j];
         }
-        ans++;
+    }
+    ll ans=0,sum=0;
+    // for(int i=0;i<n;i++)
+    // {
+    //     for(int j=0;j<m;j++) cout<<vec[i][j]<<" ";
+    //     cout<<endl;
+    // }
+    // sort(vec.begin(),vec.end());
+    for(int i=0;i<m;i++)
+    {
+        ll sum=0,temp=vec[n-1][i];
+        for(ll j=0;j<n;j++) {
+            // cout<<j<<endl;
+            sum = sum + (temp-vec[j][i]);
+        }
+        cout<<sum<<endl;
+        for(ll j=0;j<n;j++)
+        {
+            ll tt1=sum - (temp-vec[j][i]) ,tt2=0;
+            if((temp-vec[j][i])>=0ll) tt2=abs(tt1-(temp-vec[j][i]));
+            else tt2=-(tt1);
+            ans = ans + abs((temp-vec[j][i])*(n-1-j) + tt2);
+            sum=sum-(temp-vec[j][i]);
+            cout<<ans<<" ";
+        }
+         cout<<ans<<endl;
+       
     }
     cout<<ans<<endl;
+
+
+
 }
 return 0;
 }
