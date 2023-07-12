@@ -29,33 +29,7 @@ while(t--){
     ll n; cin>>n;
     vector<ll>vec(n);
     for(int i=0;i<n;i++) cin>>vec[i];
-    vector<ll>v(n);
-    for(int i=0;i<n;i++) v[i]=vec[i];
-    sort(v.begin(),v.end());
-    ll left_p=0,right_p=n-1;
-    ll ans=0,flag=0;
-    map<ll,ll>mpp;
-    for(int i=0;i<n;i++)
-    mpp[vec[i]]++;
-    while(left_p<=right_p)
-    {
-        if(vec[left_p]==v[ans])
-        {
-            ans++; left_p++;
-            mpp[0]=0;
-        }
-        else if(vec[right_p]==v[ans])
-        {
-            ans++;
-            right_p--;
-        }
-        else{
-            flag=1;break;
-        }
-    }
-    mpp.clear();
-    if(flag==1) cout<<"NO"<<endl;
-    else cout<<"YES"<<endl;
+    
 }
 return 0;
 }

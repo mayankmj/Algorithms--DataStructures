@@ -9,5 +9,6 @@ int main()
         cin>>a;
         sum=sum+a;
     }
+    /fsdf
     cout<<sum<<endl;
 }

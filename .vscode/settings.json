@@ -11,7 +11,17 @@
         "list": "cpp",
         "cstdlib": "cpp",
         "cmath": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "array": "cpp",
+        "forward_list": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "initializer_list": "cpp",
+        "regex": "cpp",
+        "chrono": "cpp",
+        "limits": "cpp",
+        "type_traits": "cpp"
     },
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "cph.general.onceMaintainerMessage": false
 }
